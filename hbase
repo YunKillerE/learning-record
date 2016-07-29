@@ -1,0 +1,24 @@
+CREATE EXTERNAL TABLE sho.ttt(
+     id string,
+     tp tinyint,
+     gd string,
+     bd string)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.hbase.HBaseSerDe'
+STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
+WITH SERDEPROPERTIES ("hbase.columns.mapping" = ":key, info:tp, info:gd, info:bd")
+TBLPROPERTIES("hbase.table.name" = "ttt");
+
+INVALIDATE METADATA;
+
+
+CREATE EXTERNAL TABLE sho.batch(
+     id string,
+     time string,
+     user string,
+     content string,
+     frequency string,
+     comment string)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.hbase.HBaseSerDe'
+STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
+WITH SERDEPROPERTIES ("hbase.columns.mapping" = ":key, info:time, info:user, info:content, info:frequency, info:comment")
+TBLPROPERTIES("hbase.table.name" = "batch_content");
